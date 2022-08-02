@@ -18,13 +18,13 @@
                     <a href="index.php" class="navbar-brand mx-5 d-none d-lg-block">
                         <h1 class="m-0 display-4 text-primary"><span class="text-secondary">i</span>CREAM</h1>
                     </a>
-                    <div class="navbar-nav mr-auto py-0">
-                        
-                        <a href="http://localhost/project/project/service.php" class="nav-item nav-link">Service</a>
-                        <a href="http://localhost/project/project/gallery.php" class="nav-item nav-link">Gallery</a>
-                        <a href="http://localhost/project/project/contact.php" class="nav-item nav-link">Contact</a>
+                    <div class="navbar-nav mr-auto py-0">   
+                    <a href="http://localhost/project/project/contact.php" class="nav-item nav-link ">Contact Us</a>                  
                         <?php 
                         if(isset($_SESSION["username"])){
+                            echo '<a href="http://localhost/project/project/orders.php" class="nav-item nav-link ">Orders</a>';
+                            echo '<a href="http://localhost/project/project/cart.php" class="nav-item nav-link ">Cart</a>';
+
                             echo '<a href="http://localhost/project/project/logout.php" class="nav-item nav-link ">Logout</a>';
                         }else{
                             echo '<a href="http://localhost/project/project/signup-form-19/index.php" class="nav-item nav-link ">Signin/Login</a>';

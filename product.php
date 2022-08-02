@@ -46,6 +46,7 @@ session_start();
                         <a class="text-white pl-3" href="">Support</a>
                     </div>
                 </div>
+                
                 <div class="col-md-6 text-center text-lg-right">
                     <div class="d-inline-flex align-items-center">
                         <a class="text-white px-3" href="">
@@ -93,6 +94,9 @@ session_start();
                 while($row = $result->fetch_assoc()) {
                     ?>
                         <div class="col-lg-3 col-md-6 mb-4 pb-2">
+                        <form action="product.php" method="get">
+                        <input type="hidden" value="<?php   echo $row["id"] ?>" name = 'productid' >
+
                     <div class="product-item d-flex flex-column align-items-center text-center bg-light rounded py-5 px-3">
                         <div class="bg-primary mt-n5 py-3" style="width: 80px;">
                             <h4 class="font-weight-bold text-white mb-0">$<?php  echo $row["price"] ?></h4>
@@ -101,8 +105,12 @@ session_start();
                             <img class="rounded-circle w-100 h-100" src="img/<?php  echo $row["image"] ?>" style="object-fit: cover;">
                         </div>
                         <h5 class="font-weight-bold mb-4"><?php  echo $row["name"] ?></h5>
-                        <a href="" class="btn btn-sm btn-secondary">Order Now</a>
+                        <input type="number" value="Quantity" name = "quantity" placeholder="Enter quantity"><br>
+                    
+                        <input type="submit" name="submit" value="Add to Cart">
                     </div>
+                    </form>
+
                 </div>
                     <?php
                 }
@@ -177,6 +185,28 @@ session_start();
 
     <!-- Template Javascript -->
     <script src="js/main.js"></script>
+    <?php
+   if($_SERVER["REQUEST_METHOD"]=="GET"){
+    $productid=(INT)$_GET['productid'];
+    $productqnatity = (INT)$_GET['quantity'];
+    $currentuser = $_SESSION['username'];
+    if(isset($_GET['submit'])){
+        $cartexistsquery = "SELECT * FROM usercart_map WHERE username = '$currentuser'";
+        $result= mysqli_query( $conn ,$cartexistsquery);
+        if(mysqli_num_rows($result)==1){
+            $allcartquery = "INSERT INTO allcart(cartid,productid,quantity,amount) VALUES((SELECT cartid FROM usercart_map WHERE username = '$currentuser'), $productid,  $productqnatity,(SELECT price FROM products WHERE id = $productid)*$productqnatity";
+            mysqli_query( $conn ,$allcartquery);
+
+    }else{
+        $insertusercart = "INSERT INTO usercart_map (username) VALUES ('$currentuser')";
+        mysqli_query($conn , $insertusercart);
+        $allcartquery = "INSERT INTO allcart(cartid,productid,quantity,amount) VALUES((SELECT cartid FROM usercart_map WHERE username = '$currentuser' ), $productid,  $productqnatity,(SELECT price FROM products WHERE id = $productid)*";
+        mysqli_query( $conn ,$allcartquery);
+
+    }
+   }
+}
+?>
 </body>
 
 </html>

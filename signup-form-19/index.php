@@ -85,6 +85,43 @@
 
 ?>
 
+<?php
+include "../config.php";
+
+if($conn->connect_error){
+	echo"failed to connect" .$conn ->connect_error;
+  }else{
+	  
+  }
+
+if($_SERVER["REQUEST_METHOD"]=="POST"){
+    $username ="";
+    $username = $_POST["fullname"];
+    $email = "";
+    $email = $_POST["email"];
+    $password = "";
+    $password = $_POST["password"];
+	$confirmPASSWORD = "";
+	$confirmPASSWORD = $_POST["confirmPASSWORD"];
+    
+    $sql = "INSERT INTO users(username , email , password)Values ('$username' , '$email', '$password');";
+		$isexecuted=$conn->query($sql);
+
+	if ($isexecuted === TRUE) {
+		
+?>
+		<script>
+			  location.replace("http://localhost/project/project/login-form-20/index.php");
+		</script>
+		<?php
+		
+	  } else {
+        $nameErr = "user already exists";	  }
+	  
+	  $conn->close();
+}
+?>
+
 
 
 
@@ -182,8 +219,7 @@ if($_SERVER["REQUEST_METHOD"]=="POST"){
 		<?php
 		
 	  } else {
-		echo "Error: " . $sql . "<br>" . $conn->error;
-	  }
+        $nameErr = "user already exists";	  }
 	  
 	  $conn->close();
 }

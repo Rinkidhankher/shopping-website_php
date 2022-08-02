@@ -38,7 +38,7 @@ session_start();
                      
                         <?php
                         if(isset($_SESSION['username'])){
-                            echo"<p style= color:white:><h1>welcome"."  " . $_SESSION['username']."  "."<h4>Edit  Profile</h4>"." </h1></p>" ;
+                            echo"<h3 style='color:white;text-align:center'>Welcome"."  " . $_SESSION['username']."  "." </h3>" ;
                             "<div><h4>Edit Profile</h4></div>"	;
                             		                
                         }
