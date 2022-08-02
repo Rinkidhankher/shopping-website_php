@@ -1,3 +1,9 @@
+<?php
+@include "config.php";
+session_start();
+?>
+
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -64,51 +70,10 @@
     </div>
     <!-- Topbar End -->
 
-
-    <!-- Navbar Start -->
-    <div class="container-fluid position-relative nav-bar p-0">
-        <div class="container-lg position-relative p-0 px-lg-3" style="z-index: 9;">
-            <nav class="navbar navbar-expand-lg bg-white navbar-light shadow p-lg-0">
-                <a href="index.php" class="navbar-brand d-block d-lg-none">
-                    <h1 class="m-0 display-4 text-primary"><span class="text-secondary">i</span>CREAM</h1>
-                </a>
-                <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#navbarCollapse">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-                <div class="collapse navbar-collapse justify-content-between" id="navbarCollapse">
-                    <div class="navbar-nav ml-auto py-0">
-                        <a href="index.php" class="nav-item nav-link">Home</a>
-                        <a href="about.php" class="nav-item nav-link">About</a>
-                        <a href="product.php" class="nav-item nav-link active">Product</a>
-                    </div>
-                    <a href="index.php" class="navbar-brand mx-5 d-none d-lg-block">
-                        <h1 class="m-0 display-4 text-primary"><span class="text-secondary">i</span>CREAM</h1>
-                    </a>
-                    <div class="navbar-nav mr-auto py-0">
-                        <a href="service.php" class="nav-item nav-link">Service</a>
-                        <a href="gallery.php" class="nav-item nav-link">Gallery</a>
-                        <a href="contact.php" class="nav-item nav-link">Contact</a>
-                        <a href="signup-form-19" class="nav-item nav-link">Register/Login</a>
-                    </div>
-                </div>
-            </nav>
-        </div>
-    </div>
-    <!-- Navbar End -->
-
-
-    <!-- Header Start -->
-    <div class="jumbotron jumbotron-fluid page-header" style="margin-bottom: 90px;">
-        <div class="container text-center py-5">
-            <h1 class="text-white display-3 mt-lg-5">Product</h1>
-            <div class="d-inline-flex align-items-center text-white">
-                <p class="m-0"><a class="text-white" href="">Home</a></p>
-                <i class="fa fa-circle px-3"></i>
-                <p class="m-0">Product</p>
-            </div>
-        </div>
-    </div>
-    <!-- Header End -->
+    <?php 
+    @include "header.php";
+    
+    ?>
 
 
     <!-- Products Start -->
@@ -120,102 +85,31 @@
                 </div>
             </div>
             <div class="row">
-                <div class="col-lg-3 col-md-6 mb-4 pb-2">
+
+            <?php 
+            $products_fetch = "SELECT * FROM products";
+            $result = mysqli_query($conn, $products_fetch);
+            if ($result->num_rows > 0) {
+                while($row = $result->fetch_assoc()) {
+                    ?>
+                        <div class="col-lg-3 col-md-6 mb-4 pb-2">
                     <div class="product-item d-flex flex-column align-items-center text-center bg-light rounded py-5 px-3">
                         <div class="bg-primary mt-n5 py-3" style="width: 80px;">
-                            <h4 class="font-weight-bold text-white mb-0">$99</h4>
+                            <h4 class="font-weight-bold text-white mb-0">$<?php  echo $row["price"] ?></h4>
                         </div>
                         <div class="position-relative bg-primary rounded-circle mt-n3 mb-4 p-3" style="width: 150px; height: 150px;">
-                            <img class="rounded-circle w-100 h-100" src="img/product-1.jpg" style="object-fit: cover;">
+                            <img class="rounded-circle w-100 h-100" src="img/<?php  echo $row["image"] ?>" style="object-fit: cover;">
                         </div>
-                        <h5 class="font-weight-bold mb-4">Vanilla Ice Cream</h5>
+                        <h5 class="font-weight-bold mb-4"><?php  echo $row["name"] ?></h5>
                         <a href="" class="btn btn-sm btn-secondary">Order Now</a>
                     </div>
                 </div>
-                <div class="col-lg-3 col-md-6 mb-4 pb-2">
-                    <div class="product-item d-flex flex-column align-items-center text-center bg-light rounded py-5 px-3">
-                        <div class="bg-primary mt-n5 py-3" style="width: 80px;">
-                            <h4 class="font-weight-bold text-white mb-0">$99</h4>
-                        </div>
-                        <div class="position-relative bg-primary rounded-circle mt-n3 mb-4 p-3" style="width: 150px; height: 150px;">
-                            <img class="rounded-circle w-100 h-100" src="img/product-2.jpg" style="object-fit: cover;">
-                        </div>
-                        <h5 class="font-weight-bold mb-4">Vanilla Ice Cream</h5>
-                        <a href="" class="btn btn-sm btn-secondary">Order Now</a>
-                    </div>
-                </div>
-                <div class="col-lg-3 col-md-6 mb-4 pb-2">
-                    <div class="product-item d-flex flex-column align-items-center text-center bg-light rounded py-5 px-3">
-                        <div class="bg-primary mt-n5 py-3" style="width: 80px;">
-                            <h4 class="font-weight-bold text-white mb-0">$99</h4>
-                        </div>
-                        <div class="position-relative bg-primary rounded-circle mt-n3 mb-4 p-3" style="width: 150px; height: 150px;">
-                            <img class="rounded-circle w-100 h-100" src="img/product-3.jpg" style="object-fit: cover;">
-                        </div>
-                        <h5 class="font-weight-bold mb-4">Vanilla Ice Cream</h5>
-                        <a href="" class="btn btn-sm btn-secondary">Order Now</a>
-                    </div>
-                </div>
-                <div class="col-lg-3 col-md-6 mb-4 pb-2">
-                    <div class="product-item d-flex flex-column align-items-center text-center bg-light rounded py-5 px-3">
-                        <div class="bg-primary mt-n5 py-3" style="width: 80px;">
-                            <h4 class="font-weight-bold text-white mb-0">$99</h4>
-                        </div>
-                        <div class="position-relative bg-primary rounded-circle mt-n3 mb-4 p-3" style="width: 150px; height: 150px;">
-                            <img class="rounded-circle w-100 h-100" src="img/product-4.jpg" style="object-fit: cover;">
-                        </div>
-                        <h5 class="font-weight-bold mb-4">Vanilla Ice Cream</h5>
-                        <a href="" class="btn btn-sm btn-secondary">Order Now</a>
-                    </div>
-                </div>
-                <div class="col-lg-3 col-md-6 mb-4 pb-2">
-                    <div class="product-item d-flex flex-column align-items-center text-center bg-light rounded py-5 px-3">
-                        <div class="bg-primary mt-n5 py-3" style="width: 80px;">
-                            <h4 class="font-weight-bold text-white mb-0">$99</h4>
-                        </div>
-                        <div class="position-relative bg-primary rounded-circle mt-n3 mb-4 p-3" style="width: 150px; height: 150px;">
-                            <img class="rounded-circle w-100 h-100" src="img/product-5.jpg" style="object-fit: cover;">
-                        </div>
-                        <h5 class="font-weight-bold mb-4">Vanilla Ice Cream</h5>
-                        <a href="" class="btn btn-sm btn-secondary">Order Now</a>
-                    </div>
-                </div>
-                <div class="col-lg-3 col-md-6 mb-4 pb-2">
-                    <div class="product-item d-flex flex-column align-items-center text-center bg-light rounded py-5 px-3">
-                        <div class="bg-primary mt-n5 py-3" style="width: 80px;">
-                            <h4 class="font-weight-bold text-white mb-0">$99</h4>
-                        </div>
-                        <div class="position-relative bg-primary rounded-circle mt-n3 mb-4 p-3" style="width: 150px; height: 150px;">
-                            <img class="rounded-circle w-100 h-100" src="img/product-1.jpg" style="object-fit: cover;">
-                        </div>
-                        <h5 class="font-weight-bold mb-4">Vanilla Ice Cream</h5>
-                        <a href="" class="btn btn-sm btn-secondary">Order Now</a>
-                    </div>
-                </div>
-                <div class="col-lg-3 col-md-6 mb-4 pb-2">
-                    <div class="product-item d-flex flex-column align-items-center text-center bg-light rounded py-5 px-3">
-                        <div class="bg-primary mt-n5 py-3" style="width: 80px;">
-                            <h4 class="font-weight-bold text-white mb-0">$99</h4>
-                        </div>
-                        <div class="position-relative bg-primary rounded-circle mt-n3 mb-4 p-3" style="width: 150px; height: 150px;">
-                            <img class="rounded-circle w-100 h-100" src="img/product-2.jpg" style="object-fit: cover;">
-                        </div>
-                        <h5 class="font-weight-bold mb-4">Vanilla Ice Cream</h5>
-                        <a href="" class="btn btn-sm btn-secondary">Order Now</a>
-                    </div>
-                </div>
-                <div class="col-lg-3 col-md-6 mb-4 pb-2">
-                    <div class="product-item d-flex flex-column align-items-center text-center bg-light rounded py-5 px-3">
-                        <div class="bg-primary mt-n5 py-3" style="width: 80px;">
-                            <h4 class="font-weight-bold text-white mb-0">$99</h4>
-                        </div>
-                        <div class="position-relative bg-primary rounded-circle mt-n3 mb-4 p-3" style="width: 150px; height: 150px;">
-                            <img class="rounded-circle w-100 h-100" src="img/product-3.jpg" style="object-fit: cover;">
-                        </div>
-                        <h5 class="font-weight-bold mb-4">Vanilla Ice Cream</h5>
-                        <a href="" class="btn btn-sm btn-secondary">Order Now</a>
-                    </div>
-                </div>
+                    <?php
+                }
+            }
+            ?>
+                
+                
                 <div class="col-12 text-center">
                     <a href="" class="btn btn-primary py-3 px-5">Load More</a>
                 </div>

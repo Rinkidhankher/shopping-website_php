@@ -29,8 +29,8 @@
 				$nameErr = "your name shouldn't be empty";
 			}
 		else{
-			$name = $_POST["fullname"];
-			if(!preg_match("/^[a-zA-Z-']*$/",$name)){
+			$username = $_POST["fullname"];
+			if(!preg_match("/^[a-zA-Z-']*$/",$username)){
 				$nameErr = "only letter and whites spaces not allowed";
 			}
 		}
@@ -89,41 +89,14 @@
 
 
 
-	 <!-- Navbar Start -->
-	 <div class="container-fluid position-relative nav-bar p-0">
-        <div class="container-lg position-relative p-0 px-lg-3" style="z-index: 9;">
-            <nav class="navbar navbar-expand-lg bg-white navbar-light shadow p-lg-0">
-                <a href="index.php" class="navbar-brand d-block d-lg-none">
-                    <h1 class="m-0 display-4 text-primary"><span class="text-secondary">i</span>CREAM</h1>
-                </a>
-                <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#navbarCollapse">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-                <div class="collapse navbar-collapse justify-content-between" id="navbarCollapse">
-                    <div class="navbar-nav ml-auto py-0">
-                        <a href="../index.php" class="nav-item nav-link active">Home</a>
-                        <a href="../about.php" class="nav-item nav-link">About</a>
-                        <a href="../product.php" class="nav-item nav-link">Product</a>
-                    </div>
-                    <a href="../index.php" class="navbar-brand mx-5 d-none d-lg-block">
-                        <h1 class="m-0 display-4 text-primary"><span class="text-secondary">i</span>CREAM</h1>
-                    </a>
-                    <div class="navbar-nav mr-auto py-0">
-                        <a href="../service.php" class="nav-item nav-link">Service</a>
-                        <a href="../gallery.php" class="nav-item nav-link">Gallery</a>
-                        <a href="../contact.php" class="nav-item nav-link">Contact</a>
-                        <a href="signup-form-19" class="nav-item nav-link">Register/Login</a>
-                    </div>
-                </div>
-            </nav>
-        </div>
-    </div>
-    <!-- Navbar End -->
+	<?php
+	include "../header.php";
+	?>
 
 	<section class="ftco-section">
 		<div class="container">
 			<div class="row justify-content-center">
-				<div class="col-md-6 text-center mb-5">
+				<div class="col-md-6 text-center mb-5">	
 					<h2 class="heading-section">Sign Up </h2>
 				</div>
 			</div>
@@ -166,7 +139,7 @@
 	            	<button type="submit" class="form-control btn btn-primary submit px-3" name="submit">Sign Up</button>
 	            </div>
 	          </form>
-	          <p>I'm already a member! <a href="../login-form-20/login-form-20/index.php">Sign In</a></p>
+	          <p>I'm already a member! <a href="../login-form-20/index.php">Sign In</a></p>
 	        </div>
 				</div>
 			</div>
@@ -179,11 +152,8 @@
   <script src="js/main.js"></script>
 
 <?php
-$servername = "localhost:3307";
-$username = "root";
-$password = "";
-$db = "icecream";
-$conn = new mysqli($servername , $username , $password , $db);
+include "../config.php";
+
 if($conn->connect_error){
 	echo"failed to connect" .$conn ->connect_error;
   }else{
@@ -207,7 +177,7 @@ if($_SERVER["REQUEST_METHOD"]=="POST"){
 		
 ?>
 		<script>
-			  location.replace("http://localhost/project/project/login-form-20/login-form-20/index.php");
+			  location.replace("http://localhost/project/project/login-form-20/index.php");
 		</script>
 		<?php
 		

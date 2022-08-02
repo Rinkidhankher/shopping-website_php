@@ -1,3 +1,7 @@
+<?php
+session_start();
+@include "../config.php";
+?>
 <!doctype html>
 <html lang="en">
   <head>
@@ -18,11 +22,7 @@
 
 	</head>
 	<body class="img js-fullheight" style="background-image: url(images/icecream.avif);">
-	<?php
-	// Start the session
-	session_start();
-	include "../project/project/config.php";
-	?>
+
 	<?php
 		$username = $password = "";
 		$usernameErr = $passwordErr = "";
@@ -40,42 +40,31 @@
 				$password =$_POST["password"];
 			}
 		}
-
-		
-
 	?>
+	<?php
+if($_SERVER["REQUEST_METHOD"]=="POST"){
+	$username = "";
+	$username = $_POST["fullname"];
+	$password = "";
+	$password = $_POST["password"];
+	if(isset($_POST['submit'])){
+		$username = $_POST['fullname'];
+		$pass = $_POST['password'];
+		$check_login = "SELECT * FROM users WHERE username = '$username' && password = '$pass'";
+		$result = mysqli_query($conn, $check_login);
+		if(mysqli_num_rows($result )>0){	
+				$_SESSION['username'] = $username;	
+				header("location:../index.php");
+				
+		}else{
 
-	 <!-- Navbar Start -->
-	 <div class="container-fluid position-relative nav-bar p-0">
-        <div class="container-lg position-relative p-0 px-lg-3" style="z-index: 9;">
-            <nav class="navbar navbar-expand-lg bg-white navbar-light shadow p-lg-0">
-                <a href="index.php" class="navbar-brand d-block d-lg-none">
-                    <h1 class="m-0 display-4 text-primary"><span class="text-secondary">i</span>CREAM</h1>
-                </a>
-                <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#navbarCollapse">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-                <div class="collapse navbar-collapse justify-content-between" id="navbarCollapse">
-                    <div class="navbar-nav ml-auto py-0">
-                        <a href="index.php" class="nav-item nav-link active">Home</a>
-                        <a href="about.php" class="nav-item nav-link">About</a>
-                        <a href="product.php" class="nav-item nav-link">Product</a>
-                    </div>
-                    <a href="index.php" class="navbar-brand mx-5 d-none d-lg-block">
-                        <h1 class="m-0 display-4 text-primary"><span class="text-secondary">i</span>CREAM</h1>
-                    </a>
-                    <div class="navbar-nav mr-auto py-0">
-                        <a href="" class="nav-item nav-link">Service</a>
-                        <a href="../gallery.php" class="nav-item nav-link">Gallery</a>
-                        <a href="../contact.php" class="nav-item nav-link">Contact</a>
-                        <a href="../signup-form-19" class="nav-item nav-link">Register/Login</a>
-                    </div>
-                </div>
-            </nav>
-        </div>
-    </div>
-    <!-- Navbar End -->
+		}
+	}
+}
+?>
 
+
+<?php @include "../header.php" ?>
 	<section class="ftco-section">
 		<div class="container">
 			<div class="row justify-content-center">
@@ -90,11 +79,11 @@
 		      	<form action="<?php $_SERVER["PHP_SELF"] ?>" class="signin-form" method="POST">
 		      		<div class="form-group">
 		      			<input type="text" class="form-control" placeholder="Username" name="fullname" required>
-						  <span class="error"><?php if(!empty($username)){echo $usernameErr; }?></span>
+						  <span class="error"><?php if(empty($username)){echo "<p>$usernameErr</p>"; }?></span>
 		      		</div>
 	            <div class="form-group">
 	              <input id="password-field" type="password" class="form-control" placeholder="Password" name="password"  required>
-				  <span class="error"><?php echo $passwordErr;?></span>
+				  <span class="error"><?php if(empty($password)){echo "<p>$passwordErr</p>"; }?></span>
 	              <span toggle="#password-field" class="fa fa-fw fa-eye field-icon toggle-password"></span>
 	            </div>
 	            <div class="form-group">
@@ -130,31 +119,4 @@
 
 	</body>
 </html>
-<?php
-include "../project/project/config.php";
-if($_SERVER["REQUEST_METHOD"]=="POST"){
-	$username = "";
-	$username = $_POST["fullname"];
-	$password = "";
-	$password = $_POST["password"];
-	if(isset($_POST['submit'])){
-		$username = $_POST['fullname'];
-		$pass = $_POST['password'];
-		$check_login = "SELECT *FROM users WHERE username = '$username' && password = '$pass'";
-		$result = mysqli_query($conn, $check_login);
-		if(mysqli_num_rows($result )==1){
-			
-			$_session['fullname'] = "rinki";
-			
-			?>
-			<script>
-				window.location.href = "http://localhost/project/project/";
-			</script>
-			<?php
-		}else{
-			echo "<h1 style='color:red;'>false<h1>";
-		}
-	}
-}
-?>
 
