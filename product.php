@@ -94,7 +94,7 @@ session_start();
                 while($row = $result->fetch_assoc()) {
                     ?>
                         <div class="col-lg-3 col-md-6 mb-4 pb-2">
-                        <form action="product.php" method="get">
+                        <form action="product.php" method="POST">
                         <input type="hidden" value="<?php   echo $row["id"] ?>" name = 'productid' >
 
                     <div class="product-item d-flex flex-column align-items-center text-center bg-light rounded py-5 px-3">
@@ -186,26 +186,34 @@ session_start();
     <!-- Template Javascript -->
     <script src="js/main.js"></script>
     <?php
-   if($_SERVER["REQUEST_METHOD"]=="GET"){
-    $productid=(INT)$_GET['productid'];
-    $productqnatity = (INT)$_GET['quantity'];
+    
+   if($_SERVER["REQUEST_METHOD"]=="POST"){
+
+    $productid=$_POST['productid'];
+    $productqnatity = $_POST['quantity'];
     $currentuser = $_SESSION['username'];
-    if(isset($_GET['submit'])){
+
+    if(isset($_POST['submit'])){
         $cartexistsquery = "SELECT * FROM usercart_map WHERE username = '$currentuser'";
         $result= mysqli_query( $conn ,$cartexistsquery);
-        if(mysqli_num_rows($result)==1){
-            $allcartquery = "INSERT INTO allcart(cartid,productid,quantity,amount) VALUES((SELECT cartid FROM usercart_map WHERE username = '$currentuser'), $productid,  $productqnatity,(SELECT price FROM products WHERE id = $productid)*$productqnatity";
-            mysqli_query( $conn ,$allcartquery);
+        if(mysqli_num_rows($result)==1){      
+        $allcartquery = "INSERT INTO allcart(cartid,productid,quantity,amount) VALUES((SELECT cartid FROM usercart_map WHERE username = '$currentuser'), $productid, $productqnatity,(SELECT price FROM products where id = $productid)*$productqnatity)";
+        mysqli_query( $conn ,$allcartquery);
 
     }else{
+
         $insertusercart = "INSERT INTO usercart_map (username) VALUES ('$currentuser')";
         mysqli_query($conn , $insertusercart);
-        $allcartquery = "INSERT INTO allcart(cartid,productid,quantity,amount) VALUES((SELECT cartid FROM usercart_map WHERE username = '$currentuser' ), $productid,  $productqnatity,(SELECT price FROM products WHERE id = $productid)*";
-        mysqli_query( $conn ,$allcartquery);
+        $allcartquery = "INSERT INTO allcart(cartid,productid,quantity,amount) VALUES((SELECT cartid FROM usercart_map WHERE username = '$currentuser'), $productid, $productqnatity,(SELECT price FROM products where id = $productid)*$productqnatity)";
+        $productexists ="SELECT * FROM allcart WHERE productid = $productid ";
+        $cartconnection = mysqli_query( $conn ,$allcartquery);  
 
     }
    }
 }
+?>
+<?php
+
 ?>
 </body>
 
